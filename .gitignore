@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+data/parker.db
+data/parker.log
+data/storage/
+data/backup_*.zip

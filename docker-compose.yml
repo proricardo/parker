@@ -1,0 +1,7 @@
+services:
+  parker:
+    build: .
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./data:/app/data

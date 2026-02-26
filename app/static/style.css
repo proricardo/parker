@@ -1,0 +1,13 @@
+:root{--bg:#f5f7fb;--surface:#fff;--ink:#1b1b1f;--primary:#65558f;--error:#ba1a1a}
+body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0}
+header{background:var(--surface);padding:12px 20px;display:flex;gap:16px;align-items:center;box-shadow:0 1px 4px #0001;position:sticky;top:0}
+a{color:var(--primary);text-decoration:none}
+main{padding:20px;max-width:1200px;margin:0 auto}
+.card{background:var(--surface);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px #0002}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,select,textarea,button{padding:10px;border-radius:10px;border:1px solid #ccc}
+button{background:var(--primary);color:#fff;border:none;cursor:pointer}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #eee}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#ece6f0}
+.warn{color:var(--error);font-weight:700}
+pre{white-space:pre-wrap;background:#111;color:#ddd;padding:10px;border-radius:10px;max-height:240px;overflow:auto}
