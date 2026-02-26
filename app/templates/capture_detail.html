@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Captura #{{cap.id}}</h2>
+  <p><b>URL:</b> {{cap.url}}</p>
+  <p><b>Status:</b> {{cap.status}} | <b>HTTP:</b> {{cap.http_status}} | <b>Tamanho:</b> {{(cap.total_size/1024)|round(2)}} KB | <b>Data:</b> {{cap.created_at}}</p>
+  <p><b>Título:</b> {{cap.title}}</p>
+  <p><b>Descrição:</b> {{cap.description}}</p>
+  <p><b>Integridade:</b> {{cap.integrity_state}}</p>
+  <h4>Tags</h4>
+  {% for t in tags %}<span class="badge">{{t.name}}</span>{% endfor %}
+  <form action="/captures/{{cap.id}}/tags" method="post"><input name="tag" placeholder="nova tag"><button>Adicionar tag</button></form>
+</div>
+<div class="card">
+  <h3>Artefatos</h3>
+  <ul>{% for a in artifacts %}<li>{{a.kind}} - <a href="/artifacts/{{a.id}}/view">visualizar</a> | <a href="/artifacts/{{a.id}}/download">download</a></li>{% endfor %}</ul>
+</div>
+<div class="card">
+  <h3>Snapshots da mesma URL</h3>
+  <ul>{% for s in siblings %}<li><a href="/captures/{{s.id}}">#{{s.id}}</a> - {{s.created_at}} - {{s.status}}</li>{% endfor %}</ul>
+</div>
+<div class="card">
+  <h3>Progresso em tempo real</h3>
+  <pre id="events">Aguardando...</pre>
+</div>
+<div class="card">
+  <form method="post" action="/captures/{{cap.id}}/delete" onsubmit="return confirm('Confirmar exclusão definitiva?')">
+    <button type="submit">Excluir captura</button>
+  </form>
+</div>
+<script>
+const pre=document.getElementById('events');
+const es = new EventSource('/captures/{{cap.id}}/events');
+es.onmessage=(ev)=>{pre.textContent += "\n" + ev.data; pre.scrollTop=pre.scrollHeight;};
+</script>
+{% endblock %}
