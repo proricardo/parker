@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <form method="get" action="/captures" class="grid">
+    <input name="q" value="{{q}}" placeholder="Busca livre">
+    <input name="domain" value="{{domain}}" placeholder="Domínio">
+    <select name="status"><option value="">Status</option><option {% if status=='success' %}selected{% endif %}>success</option><option {% if status=='partial' %}selected{% endif %}>partial</option><option {% if status=='failed' %}selected{% endif %}>failed</option></select>
+    <button type="submit">Filtrar</button>
+  </form>
+</div>
+<div class="card">
+<table>
+  <tr><th>ID</th><th>URL</th><th>Status</th><th>Data</th><th>Tamanho</th><th></th></tr>
+  {% for c in captures %}
+  <tr>
+    <td>{{c.id}}</td><td>{{c.url}}</td><td><span class="badge">{{c.status}}</span></td><td>{{c.created_at}}</td><td>{{(c.total_size/1024)|round(1)}} KB</td><td><a href="/captures/{{c.id}}">abrir</a></td>
+  </tr>
+  {% if highlights.get(c.id) %}<tr><td colspan="6">{{highlights.get(c.id)|safe}}</td></tr>{% endif %}
+  {% endfor %}
+</table>
+<p>Página {{page}} / {{total_pages}}</p>
+</div>
+{% endblock %}
