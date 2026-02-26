@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid">
+  <div class="card"><h3>Total arquivadas</h3><p>{{total}}</p></div>
+  <div class="card"><h3>Espaço em disco</h3><p>{{(size/1024/1024)|round(2)}} MB</p></div>
+  <div class="card"><h3>Domínios distintos</h3><p>{{domains}}</p></div>
+  <div class="card"><h3>Últimos 7 dias</h3><p>{{recent}}</p></div>
+</div>
+<div class="card">
+  <h3>Nova captura</h3>
+  {% if alert %}<p class="warn">Alerta: uso de disco em {{usage_pct}}%</p>{% endif %}
+  <form method="post" action="/captures">
+    <input name="url" placeholder="https://exemplo.com" required style="width:100%"><br><br>
+    <label><input type="checkbox" name="include_pdf"> Gerar PDF</label><br><br>
+    <textarea name="headers_json" placeholder='Headers JSON ex: {"User-Agent":"Parker"}' style="width:100%"></textarea><br><br>
+    <textarea name="cookies_json" placeholder='Cookies JSON ex: [{"name":"sid","value":"x","domain":"exemplo.com","path":"/"}]' style="width:100%"></textarea><br><br>
+    <button type="submit">Iniciar captura</button>
+  </form>
+</div>
+{% endblock %}

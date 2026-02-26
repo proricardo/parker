@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Configurações</h3>
+  <form method="post" action="/settings" class="grid">
+    {% for item in cfg %}
+      <label>{{item.key}}<input name="{{item.key}}" value="{{item.value}}"></label>
+    {% endfor %}
+    <button type="submit">Salvar</button>
+  </form>
+</div>
+<div class="card">
+  <h3>Re-captura periódica</h3>
+  <form method="post" action="/schedules" class="grid">
+    <input name="url" placeholder="https://site.com" required>
+    <input name="interval_hours" type="number" min="1" placeholder="Intervalo (h)" required>
+    <button type="submit">Criar agendamento</button>
+  </form>
+  <ul>
+    {% for s in schedules %}
+    <li>#{{s.id}} {{s.url}} / {{s.interval_hours}}h / {{'ativo' if s.active else 'inativo'}}
+      <form method="post" action="/schedules/{{s.id}}/toggle" style="display:inline"><button>Alternar</button></form>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
