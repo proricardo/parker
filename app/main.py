@@ -31,10 +31,16 @@ STORAGE_DIR = DATA_DIR / "storage"
 DB_PATH = DATA_DIR / "parker.db"
 LOG_PATH = DATA_DIR / "parker.log"
 
+# Garante diretórios base antes de configurar logging em arquivo
+# (evita FileNotFoundError na importação do módulo, especialmente no Windows).
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+
 logging.basicConfig(
     filename=LOG_PATH,
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(threadName)s %(message)s",
+    encoding="utf-8",
 )
 logger = logging.getLogger("parker")
 
@@ -537,4 +543,3 @@ def export_backup():
             if p.is_file():
                 z.write(p, arcname=str(Path("storage") / p.relative_to(STORAGE_DIR)))
     return FileResponse(backup_path, filename=backup_path.name)
-

@@ -88,7 +88,13 @@ playwright install chromium
 uvicorn app.main:app --host 0.0.0.0 --port 8123
 ```
 
+> Observação: em Linux via Docker, a imagem já executa `playwright install chromium` no build. Em instalações bare-metal, se necessário instale dependências de sistema manualmente (pacotes de fontes/GTK variam por distro).
+
 Acesse: http://localhost:8123
+
+### Solução de problemas (Windows)
+
+Se ao iniciar o Uvicorn ocorrer erro como `FileNotFoundError: ... data\\parker.log`, garanta que está executando os comandos na raiz do projeto e que a pasta `data` exista. Nas versões atuais do Parker isso já é criado automaticamente na importação da aplicação.
 
 ---
 
@@ -98,6 +104,13 @@ Acesse: http://localhost:8123
 ```bash
 docker build -t parker:latest .
 docker run --rm -p 8123:8123 -v $(pwd)/data:/app/data parker:latest
+```
+
+Se você estiver no Windows PowerShell, use:
+
+```powershell
+docker build -t parker:latest .
+docker run --rm -p 8123:8123 -v ${PWD}/data:/app/data parker:latest
 ```
 
 ### Docker Compose
@@ -175,4 +188,3 @@ erDiagram
 - Operação local por padrão.
 - Nenhum envio para serviços externos fora da URL explicitamente capturada.
 - Logs detalhados para troubleshooting e auditoria.
-
